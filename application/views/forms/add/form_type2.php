@@ -51,7 +51,7 @@
         </div>
         <div class="col">
             <label for="shift">Destination</label>
-            <select required="" name="destination_id" class="form-control" id="shift">
+            <select name="destination_id" class="form-control" id="shift">
             <?php echo select2(DESTINATION(),(!empty($_POST['destination_id']) ? $_POST['destination_id']:'')) ?>
             </select>
         </div>
