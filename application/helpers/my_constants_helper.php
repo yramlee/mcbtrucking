@@ -17,6 +17,18 @@ function TYPE_TONS() {
  * 
  * @return array
  */
+function TYPE_YESNO() {
+    return array(
+        array('id' => TYPE_NO, 'name' => 'No'),
+        array('id' => TYPE_YES, 'name' => 'Yes'),       
+    );
+}
+
+/**
+ * Types of Deductions
+ * 
+ * @return array
+ */
 function TYPE_DEDUCTIONS() {
     return array(
         array('id' => DEDUCTIONS_TYPE_FUEL, 'name' => 'Fuel'),
@@ -180,10 +192,30 @@ function MATERIAL() {
      $result = $CI->Material_model->get_all();
      $data = array();
      
-     if (!empty($result)) {
+     if (!empty($result)) {            
          foreach ($result as $key => $values) {
             $data[$key]['id'] = $values->id;
             $data[$key]['name'] = $values->name;
+         }
+     }
+     
+     return $data;
+}
+
+/**
+ * Material list
+ * 
+ * @return array
+ */
+function my_material() {
+     $CI =& get_instance();
+     
+     $CI->load->model('Material_model');
+     $result = $CI->Material_model->get_all();
+     
+     if (!empty($result)) {
+         foreach ($result as $key => $values) {
+            $data[$values->id] = $values->name;
          }
      }
      
@@ -212,7 +244,7 @@ function SHIFT() {
 }
 
 /**
- * Material list
+ * Shift list
  * 
  * @return array
  */

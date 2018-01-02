@@ -3,7 +3,7 @@
     <div class="row">        
         <div class="col">
             <label for="from">From</label>
-            <input id="from" required="" name="from" type="text" class="form-control">
+            <input id="from" name="from" type="text" class="form-control">
         </div> 
         <div class="col">
             <label for="to">To</label>

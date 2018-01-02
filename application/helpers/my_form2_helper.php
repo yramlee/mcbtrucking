@@ -65,7 +65,7 @@ function __displayEachReportPerDestination($obj = array(), $company = array(), $
         }
         if (!empty($destination)) {
             $data .= '<tr>';
-            $data .= '<th colspan="7" style="padding: 15px;"><h2>'.@$destination->from.' to '.@$destination->to.'</h2></th>';
+            $data .= '<th colspan="9" style="padding: 15px;"><h2>'.@$destination->from.' to '.@$destination->to.'</h2></th>';
             $data .= '</tr>';
         }
         if ($pdf_mode) {
@@ -73,6 +73,7 @@ function __displayEachReportPerDestination($obj = array(), $company = array(), $
                 <th style="border: 1px solid #e9ecef;padding: 10px;background-color: #007bff;color: #fff;width: 5%;">#</th>
                 <th style="border: 1px solid #e9ecef;padding: 10px;background-color: #007bff;color: #fff;width: 14%;">DATE</th>
                 <th style="border: 1px solid #e9ecef;padding: 10px;background-color: #007bff;color: #fff;width: 14%;">Shift</th> 
+                <th style="border: 1px solid #e9ecef;padding: 10px;background-color: #007bff;color: #fff;width: 14%;">Material</th> 
                 <th style="border: 1px solid #e9ecef;padding: 10px;background-color: #007bff;color: #fff;width: 14%;">Trips</th>
                 <th style="border: 1px solid #e9ecef;padding: 10px;background-color: #007bff;color: #fff;width: 14%;">Flecon Bags</th>
                 <th style="border: 1px solid #e9ecef;padding: 10px;background-color: #007bff;color: #fff;width: 14%;">Rate</th>
@@ -81,9 +82,10 @@ function __displayEachReportPerDestination($obj = array(), $company = array(), $
         }
         else {
             $data .= '<tr>
-                 <th>#</th>
+                 <th style="width: 5%;">#</th>
                  <th>DATE</th>
                  <th>Shift</th> 
+                 <th>Material</th> 
                  <th>Trips</th>
                  <th>Destination</th>
                  <th>Flecon Bags</th>
@@ -96,8 +98,14 @@ function __displayEachReportPerDestination($obj = array(), $company = array(), $
         $ctr = 1;
         $no_of_bags = 0;
         $subTotal = 0;
-        foreach ($obj as $value) {           
-            $subTotal += $value->no_of_bags * my_rate()[$value->rate_id];                 
+        foreach ($obj as $value) {       
+            if ($value->above) {
+                $subTotal += $value->no_of_trips * my_rate()[$value->rate_id];      
+            }
+            else {
+                $subTotal += $value->no_of_bags * my_rate()[$value->rate_id]; 
+            }
+                            
             $no_of_bags += $value->no_of_bags; 
             
             if ($pdf_mode) {
@@ -105,6 +113,7 @@ function __displayEachReportPerDestination($obj = array(), $company = array(), $
                 $data .= '<td>'.$ctr++.'</td>';
                 $data .= '<td style="border: 1px solid #e9ecef;padding: 4px;"><strong>'.date('d-M-Y', strtotime($value->date)).'</strong></td>';
                 $data .= '<td style="border: 1px solid #e9ecef;padding: 4px;">'. my_shift()[$value->shift_id].'</td>';
+                $data .= '<td style="border: 1px solid #e9ecef;padding: 4px;">'. (!empty($value->material_id) ? my_material()[$value->material_id]:'-').'</td>';
                 $data .= '<td style="border: 1px solid #e9ecef;padding: 4px;">'.$value->no_of_trips.'</td>';                
                 $data .= '<td style="border: 1px solid #e9ecef;padding: 4px;">'.$value->flecon_bags.'</td>';
                 $data .= '<td style="border: 1px solid #e9ecef;padding: 4px;">'.my_rate()[$value->rate_id].'</td>';
@@ -116,6 +125,7 @@ function __displayEachReportPerDestination($obj = array(), $company = array(), $
                 $data .= '<td>'.$ctr++.'</td>';
                 $data .= '<td style="border: 1px solid #e9ecef;padding: 4px;"><strong>'.date('d-M-Y', strtotime($value->date)).'</strong></td>';
                 $data .= '<td style="border: 1px solid #e9ecef;padding: 4px;"><a target="_blank" href="'.base_url().'delivery/edit/'.$value->id.'">'. my_shift()[$value->shift_id].'</a></td>';
+                $data .= '<td style="border: 1px solid #e9ecef;padding: 4px;">'. (!empty($value->material_id) ? my_material()[$value->material_id]:'-').'</td>';
                 $data .= '<td style="border: 1px solid #e9ecef;padding: 4px;"><a target="_blank" href="'.base_url().'delivery/edit/'.$value->id.'">'.$value->no_of_trips.'</a></td>';
                 $data .= '<td style="border: 1px solid #e9ecef;padding: 4px;"><a target="_blank" href="'.base_url().'delivery/edit/'.$value->id.'">'.  my_destination()[$value->destination_id].'</a></td>';
                 $data .= '<td style="border: 1px solid #e9ecef;padding: 4px;"><a target="_blank" href="'.base_url().'delivery/edit/'.$value->id.'">'.$value->flecon_bags.'</a></td>';
@@ -130,28 +140,28 @@ function __displayEachReportPerDestination($obj = array(), $company = array(), $
         if ($pdf_mode) {
             $data .= '<tfoot>';
             $data .= '<tr>';
-            $data .= '<td colspan="3" style="background-color: #ffffb3; width: 20px;"><strong>Total No. of Bags</strong></td>';
-            $data .= '<td colspan="3" style="background-color: #ffffb3;"></td>';
-            $data .= '<td style="font-size: 18px; background-color:#ffffb3;padding:15px"><strong>'.$no_of_bags.'</strong></td>';
+            $data .= '<td colspan="5" style="background-color: #ffffb3; width: 20px;"><strong>Total No. of Bags</strong></td>';
+            $data .= '<td style="background-color: #ffffb3;"></td>';
+            $data .= '<td  colspan="2" style="text-align: right;font-size: 18px; background-color:#ffffb3;padding:15px"><strong>'.number_format(@$no_of_bags, 0).'</strong></td>';
             $data .= '</tr>';  
             $data .= '<tr>';
-            $data .= '<td colspan="3" style="background-color: #ffffb3; width: 50px;"><strong>Sub Total</strong></td>';
-            $data .= '<td colspan="3" style="background-color: #ffffb3;"></td>';
-            $data .= '<td style="font-size: 18px; background-color:#ffffb3;padding:15px"><strong>&#x20B1;'.number_format(@$subTotal, 2).'</strong></td>';
+            $data .= '<td colspan="5" style="background-color: #ffffb3; width: 50px;"><strong>Sub Total</strong></td>';
+            $data .= '<td style="background-color: #ffffb3;"></td>';
+            $data .= '<td colspan="2" style="text-align: right;font-size: 18px; background-color:#ffffb3;padding:15px"><strong>&#x20B1;'.number_format(@$subTotal, 2).'</strong></td>';
             $data .= '</tr>';  
             $data .= '</tfoot>'; 
         }
         else {
             $data .= '<tfoot>';
             $data .= '<tr>';
-            $data .= '<td style="background-color: #ffffb3;"><strong>Total No. of Bags</strong></td>';
-            $data .= '<td colspan="6" style="background-color: #ffffb3;"></td>';
-            $data .= '<td style="font-size: 18px; background-color:#ffffb3;"><strong>'.$no_of_bags.'</strong></td>';
+            $data .= '<td colspan="7"style="background-color: #ffffb3;"><strong>Total No. of Bags</strong></td>';
+            $data .= '<td style="background-color: #ffffb3;"></td>';
+            $data .= '<td coslpan="4" style="font-size: 18px; background-color:#ffffb3;"><strong>'.$no_of_bags.'</strong></td>';
             $data .= '</tr>';  
             $data .= '<tr>';
-            $data .= '<td style="background-color: #ffffb3;"><strong>Sub Total</strong></td>';
-            $data .= '<td colspan="6" style="background-color: #ffffb3;"></td>';
-            $data .= '<td style="font-size: 18px; background-color:#ffffb3;"><strong>&#x20B1;'.number_format(@$subTotal, 2).'</strong></td>';
+            $data .= '<td colspan="7" style="background-color: #ffffb3;"><strong>Sub Total</strong></td>';
+            $data .= '<td style="background-color: #ffffb3;"></td>';
+            $data .= '<td colspan="4" style="font-size: 18px; background-color:#ffffb3;"><strong>&#x20B1;'.number_format(@$subTotal, 2).'</strong></td>';
             $data .= '</tr>';  
             $data .= '</tfoot>'; 
         }

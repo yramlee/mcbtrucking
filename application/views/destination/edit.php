@@ -3,7 +3,7 @@
     <div class="row">        
         <div class="col">
             <label for="from">From</label>
-            <input id="from" required="" name="from" type="text" class="form-control" value="<?php echo (!empty($_POST['from']) ? $_POST['from']:@$data->from) ?>">
+            <input id="from" name="from" type="text" class="form-control" value="<?php echo (!empty($_POST['from']) ? $_POST['from']:@$data->from) ?>">
         </div> 
         <div class="col">
             <label for="to">To</label>

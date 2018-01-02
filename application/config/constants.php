@@ -84,6 +84,8 @@ defined('EXIT_DATABASE')       OR define('EXIT_DATABASE', 8); // database error
 defined('EXIT__AUTO_MIN')      OR define('EXIT__AUTO_MIN', 9); // lowest automatically-assigned error code
 defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
 
+define('TYPE_YES', 1);
+define('TYPE_NO', 0);
 define('RATE_PER_KM', 20);
 define('KILOMETERS', 2.5);
 define('TONS_TYPE1', 14);

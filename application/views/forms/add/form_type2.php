@@ -1,4 +1,12 @@
-<form method="post">    
+<form method="post"> 
+    <div class="row">
+        <div class="col">
+            <label for="above">Above?</label>
+            <select name="above" class="form-control" id="above">                       
+                <?php echo select2(TYPE_YESNO(), (!empty($_POST['above']) ? $_POST['above']:'')) ?>
+            </select>
+        </div>        
+    </div
     <div class="row">
         <div class="col">
             <label for="truck">Delivery Date:</label>
@@ -17,10 +25,19 @@
             </select>
         </div>
     </div>
+    <div class="row">
+        <div class="col">
+            <label for="material_id">Material</label>
+            <select required="" name="material_id" class="form-control" id="material_id">
+                <option selected="" value="">No Material Included</option>
+                <?php echo select2(MATERIAL(),(!empty($_POST['material_id']) ? $_POST['material_id']:'')) ?>
+            </select>
+        </div>
+    </div>
     <div class="row">        
         <div class="col">
             <label for="no_of_bags">No. of Bags</label>
-            <input id="no_of_bags" required="" name="no_of_bags" type="number" class="form-control" value="<?php echo (!empty($_POST['no_of_bags']) ? $_POST['no_of_bags']:'') ?>">
+            <input id="no_of_bags" name="no_of_bags" type="number" class="form-control" value="<?php echo (!empty($_POST['no_of_bags']) ? $_POST['no_of_bags']:'') ?>">
         </div> 
         <div class="col">
             <label for="flecon_bags">Flecon Bags</label>
