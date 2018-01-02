@@ -28,7 +28,7 @@
     <div class="row">
         <div class="col">
             <label for="material_id">Material</label>
-            <select required="" name="material_id" class="form-control" id="material_id">
+            <select name="material_id" class="form-control" id="material_id">
                 <option selected="" value="">No Material Included</option>
                 <?php echo select2(MATERIAL(),(!empty($_POST['material_id']) ? $_POST['material_id']:'')) ?>
             </select>
