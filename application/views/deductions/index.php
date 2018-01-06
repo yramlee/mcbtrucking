@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-md-12">
-        <a class="btn btn-primary btn-block btn-lg" href="<?php echo base_url() ?>deductions/add">Add Deductions</a>
+        <a class="btn btn-primary btn-block btn-lg" href="<?php echo base_url() ?>deductions/add/company">Add Deductions</a>
         <br>
     </div>
     <div class="col-md-12">
@@ -8,6 +8,7 @@
             <thead>
               <tr>
                 <th scope="col">#</th>
+                <th scope="col">Billing</th>
                 <th scope="col">DT. No.</th>
                 <th scope="col">Company</th>
                 <th scope="col">Date</th>
@@ -22,6 +23,7 @@
                 <?php foreach($deductions as $values): ?>
                     <tr>
                         <th scope="row"><?php echo $ctr++ ?></th>
+                        <td><?php echo my_billing()[$values->billing_id] ?></td>
                         <td><?php echo my_truck()[$values->truck_id] ?></td>
                         <td><?php echo my_company()[$values->company_id] ?></td>
                         <td><?php echo date('F d, Y', strtotime($values->date)); ?></td>

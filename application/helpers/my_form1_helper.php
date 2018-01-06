@@ -14,14 +14,15 @@
        $data1 = null;
        $data2 = null;
        $heading = null;
-       $trucks = $CI->Truck_model->get_all();    
+       $trucks = $CI->Truck_model->get_all(); 
+       $billing = $CI->Billing_model->get_by_id($post['billing_id']); 
        $total = 0;   
 
        if ($pdfMode) {
            $heading .= '<table style="text-align: center; width: 100%; margin: 0 auto; font-family: Arial">';
            $heading .= '<tr><td style="font-weight: bold; font-size: 25px;">MCB Trucking Services</td></tr>';  
            $heading .= '<tr><td style="position: relative; top: -20px; font-weight: bold; font-size: 18px;">Billing Summary</td></tr>';    
-           $heading .= '<tr><td><strong>Period:</strong> '.date('F d, Y', strtotime($post['delivery_date_start'])).' to '.date('F d, Y', strtotime($post['delivery_date_end'])).' </td></tr>';
+           $heading .= '<tr><td><strong>Period:</strong> '.date('F d, Y', strtotime($billing->start_date)).' to '.date('F d, Y', strtotime($billing->end_date)).' </td></tr>';
            $heading .= '</table>';              
        }
 
@@ -102,11 +103,11 @@
        $CI =& get_instance();
        $data = null;
        $instance['subTotal'] = 0;
-       $deductions = $CI->Deductions_model->get_all_by_where(array(
-           'date >=' => date('Y-m-d', strtotime(@$post['delivery_date_start'])),
-           'date <=' => date('Y-m-d', strtotime(@$post['delivery_date_end'])),
-           'company_id' => @$company->id
-       ));
+       
+        $deductions = $CI->Deductions_model->get_all_by_where(array(
+            'billing_id' => @$post['billing_id'],
+            'company_id' => $company->id
+        ));
 
         if (!empty($deductions)) {          
            $data .= '<table class="table table-striped" style="margin-top: 50px;"><thead>';
@@ -456,11 +457,10 @@
        $data = null;
 
        $deductions = $CI->Deductions_model->get_all_by_where(array(
-           'date >=' => date('Y-m-d', strtotime($post['delivery_date_start'])),
-           'date <=' => date('Y-m-d', strtotime($post['delivery_date_end'])),
+           'billing_id' => @$post['billing_id'],
            'company_id' => $company->id
        ));
-
+       
         if (!empty($deductions)) {          
            $data .= '<table style="width: 100%; border-collapse: collapse; border: 1px solid #e9ecef;font-family: Arial; margin-top: 50px;"><thead>';
            $data .= '<tr><th colspan="5" style="background-color: #0e4279; color: #fff;"><h2>Fuel Deductions</h2></th></tr>';

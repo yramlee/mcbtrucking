@@ -20,13 +20,14 @@ class Deductions extends CI_Controller {
     public function add() {
         isLoggedIn();
         $data['trucks'] = $this->Truck_model->get_all();
-        $data['company'] = $this->Company_model->get_all();    
+        $data['company'] = $this->Company_model->get_by_id($this->uri->segment(4));    
         
         if ($this->input->post()) {
             $myData = $this->input->post();
             
             $myData['date'] = date('Y-m-d', strtotime($myData['date']));           
             $myData['amount'] = $myData['liters'] * $myData['rate'];
+            $myData['company_id'] = $this->uri->segment(4);
             
             $this->Deductions_model->insert($myData);
             $data['prompt'] = promptSuccess('You have successfully added a deduction.');
@@ -67,5 +68,14 @@ class Deductions extends CI_Controller {
         $this->Deductions_model->delete_by_id($id);
         echo promptSuccess('You have successfully deleted a deduction.');
         redirectWithTime('deductions', 2000);
-    }    
+    }   
+    
+    public function company(){
+        $data = [];
+        $data['company'] = $this->Company_model->get_all();
+        
+        $this->load->view('templates/header');
+        $this->load->view('deductions/company', $data);
+        $this->load->view('templates/footer');
+    }
 }

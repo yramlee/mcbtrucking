@@ -1,5 +1,14 @@
 <?php echo @$prompt ?>
+<center><h2>Adding Deductions to <strong><?= $company->name ?></strong></h2></center>
 <form method="post">
+    <div class="row">
+        <div class="col">
+            <label for="biling_date">Billing Date</label>
+            <select required="" name="billing_id" class="form-control" id="biling_date">
+            <?php echo select2(BILLING_PER_COMPANY($this->uri->segment(4)),(!empty($_POST['billing_id']) ? $_POST['billing_id']:'')) ?>
+            </select>
+        </div>
+    </div>
     <div class="row">
          <div class="col">
             <label for="truck">Date:</label>
@@ -17,12 +26,6 @@
             <label for="truck">Truck</label>
             <select required="" name="truck_id" class="form-control" id="truck">
             <?php echo select($trucks, @$_POST['truck_id']) ?>
-            </select>
-        </div> 
-        <div class="col">
-            <label for="company">Company</label>
-            <select required="" name="company_id" class="form-control" id="company">
-            <?php echo select($company, @$_POST['company_id']) ?>
             </select>
         </div>
     </div>

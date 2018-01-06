@@ -23,15 +23,20 @@ class Delivery extends CI_Controller {
                ));
             }
             
-            if (!empty($myData['delivery_date_start']) && !empty($myData['delivery_date_end'])) {
+            if (!empty($myData['billing_id'])) {
                $where = array_merge($where, array(
-                   'date >=' => date('Y-m-d', strtotime($myData['delivery_date_start'])),
-                   'date <=' => date('Y-m-d', strtotime($myData['delivery_date_end']))
+                   'billing_id' => @$myData['billing_id']
                ));
-            }
+            }            
             
             $data['company'] = $this->Company_model->get_by_id($this->input->post('company_id'));
-            $data['deliveries'] = $this->Deliveries_model->get_all_by_where($where);
+            if (!empty($myData['billing_id'])) {
+                $data['deliveries'] = $this->Deliveries_model->get_all_by_where($where);
+            }
+            else {
+                $data['deliveries'] = array();
+            }
+            
         }
         
         $this->load->view('templates/header');

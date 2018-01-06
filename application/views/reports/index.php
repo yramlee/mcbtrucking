@@ -8,16 +8,16 @@
             </select>
         </div>
     </div>
-    <div class="row">
-        <div class="col">
-            <label for="truck">Delivery Date:</label>
-            <input name="delivery_date_start" id="delivery_date_start" class="form-control" type="text" value="<?php echo (!empty($_POST['delivery_date_start']) ? $_POST['delivery_date_start']:date('m/d/Y')) ?>">
+    <?php if(!empty($_POST['company_id'])):?>
+        <div class="row">
+            <div class="col">
+                <label for="biling_date">Billing Date</label>
+                <select required="" name="billing_id" class="form-control" id="biling_date">
+                <?php echo select2(BILLING_PER_COMPANY($_POST['company_id']),(!empty($_POST['billing_id']) ? $_POST['billing_id']:'')) ?>
+                </select>
+            </div>
         </div>
-        <div class="col">
-            <label for="truck">Delivery Date:</label>
-            <input name="delivery_date_end" id="delivery_date_end" class="form-control" type="text" value="<?php echo (!empty($_POST['delivery_date_end']) ? $_POST['delivery_date_end']:date('m/d/Y')) ?>">
-        </div>
-    </div>
+    <?php endif; ?>
     <?php if(!empty($company)): ?>    
         <?php if($company->form_type == FORM_TYPE1): ?>
             <div class="row">
@@ -54,13 +54,11 @@
 <form method="post">
     <?php if($company->form_type == FORM_TYPE1): ?>
     <input type="hidden" name="company_id" value="<?php echo @$_POST['company_id'] ?>">
-    <input type="hidden" name="delivery_date_start" value="<?php echo @$_POST['delivery_date_start'] ?>">
-    <input type="hidden" name="delivery_date_end" value="<?php echo @$_POST['delivery_date_end'] ?>">
+    <input type="hidden" name="billing_id" value="<?php echo @$_POST['billing_id'] ?>">
     <input type="hidden" name="truck_id" value="<?php echo @$_POST['truck_id'] ?>">
     <?php elseif($company->form_type == FORM_TYPE2): ?>
     <input type="hidden" name="company_id" value="<?php echo @$_POST['company_id'] ?>">
-    <input type="hidden" name="delivery_date_start" value="<?php echo @$_POST['delivery_date_start'] ?>">
-    <input type="hidden" name="delivery_date_end" value="<?php echo @$_POST['delivery_date_end'] ?>">
+    <input type="hidden" name="billing_id" value="<?php echo @$_POST['billing_id'] ?>">
     <input type="hidden" name="destination_id" value="<?php echo @$_POST['destination_id'] ?>">
     <?php endif; ?>
 <button name="download_pdf" type="submit" class="btn btn-lg btn-block btn-success" value="1">Download PDF Report</button>  

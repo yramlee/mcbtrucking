@@ -328,6 +328,92 @@ function my_rate() {
 }
 
 /**
+ * Biling list
+ * 
+ * @return array
+ */
+function BILLING() {
+     $CI =& get_instance();
+     
+     $CI->load->model('Billing_model');
+     $result = $CI->Billing_model->get_all();
+     $data = array();
+     
+     if (!empty($result)) {
+         foreach ($result as $key => $values) {
+            $data[$key]['id'] = $values->id;
+            $data[$key]['name'] = my_company()[$values->company_id].' ('.$values->start_date.' to '.$values->end_date.')';
+         }
+     }
+     
+     return $data;
+}
+
+/**
+ * Biling list
+ * 
+ * @return array
+ */
+function my_billing() {
+     $CI =& get_instance();
+     
+     $CI->load->model('Billing_model');
+     $result = $CI->Billing_model->get_all();
+     $data = array();
+     
+     if (!empty($result)) {
+         foreach ($result as $values) {
+            $data[$values->id] = my_company()[$values->company_id].' '.date('F d, Y', strtotime($values->start_date)).' to '.date('F d, Y', strtotime($values->end_date));;
+         }
+     }
+     
+     return $data;
+}
+
+/**
+ * Biling list
+ * 
+ * @return array
+ */
+function BILLING_PER_COMPANY($company_id = null) {
+     $CI =& get_instance();
+     
+     $CI->load->model('Billing_model');
+     $result = $CI->Billing_model->get_all_by_company($company_id);
+     $data = array();
+     
+     if (!empty($result)) {
+         foreach ($result as $key => $values) {
+            $data[$key]['id'] = $values->id;
+            $data[$key]['name'] = date('F d, Y', strtotime($values->start_date)).' to '.date('F d, Y', strtotime($values->end_date));
+         }
+     }
+     
+     return $data;
+}
+
+/**
+ * Biling list
+ * 
+ * @return array
+ */
+function my_billing_per_company() {
+     $CI =& get_instance();
+     
+     $CI->load->model('Billing_model');
+     $result = $CI->Billing_model->get_all_by_company($company_id);
+     $data = array();
+     
+     if (!empty($result)) {
+         foreach ($result as $values) {
+            $data[$values->id] = date('F d, Y', strtotime($values->start_date)).' to '.date('F d, Y', strtotime($values->end_date));
+         }
+     }
+     
+     return $data;
+}
+
+/**
  * Checks if the user is Logged In
  */
 function isLoggedIn() {

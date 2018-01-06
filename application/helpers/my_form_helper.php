@@ -58,9 +58,12 @@
      * @return array
      */
     function __getDatesList($post = array()) {
-        $data = array();        
-        $date_start = date('Y-m-d', strtotime($post['delivery_date_start']));
-        $date_end = date('Y-m-d', strtotime($post['delivery_date_end']));
+        $data = array();    
+        $CI =& get_instance();
+        $billing = $CI->Billing_model->get_by_id($post['billing_id']); 
+        
+        $date_start = date('Y-m-d', strtotime($billing->start_date));
+        $date_end = date('Y-m-d', strtotime($billing->end_date));
         $temp_date = null;  
         
         for($i = 0; $i <= 31; $i++) { 

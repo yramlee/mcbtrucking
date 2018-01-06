@@ -1,4 +1,12 @@
-<form method="post"> 
+<form method="post">
+    <div class="row">
+        <div class="col">
+            <label for="biling_date">Billing Date</label>
+            <select required="" name="billing_id" class="form-control" id="biling_date">
+            <?php echo select2(BILLING_PER_COMPANY($this->uri->segment(4)),(!empty($_POST['billing_id']) ? $_POST['billing_id']:'')) ?>
+            </select>
+        </div>
+    </div>
     <div class="row">
         <div class="col">
             <label for="above">Above?</label>

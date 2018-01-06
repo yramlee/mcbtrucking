@@ -59,6 +59,9 @@ $route['delivery/edit/(:any)'] = 'delivery/edit/$1';
 $route['delivery/delete/(:any)'] = 'delivery/delete/$1';
 $route['delivery'] = 'delivery/index';
 
+$route['deductions/add/company'] = 'deductions/company';
+$route['deductions/edit/company'] = 'deductions/company';
+$route['deductions/add/company/(:any)'] = 'deductions/add/$1';
 $route['deductions/edit/(:any)'] = 'deductions/edit/$1';
 $route['deductions/delete/(:any)'] = 'deductions/delete/$1';
 $route['deductions'] = 'deductions/index';
@@ -94,6 +97,10 @@ $route['rate/delete/(:any)'] = 'rate/delete/$1';
 $route['rate'] = 'rate/index';
 $route['rate/add'] = 'rate/add';
 
+$route['billing/edit/(:any)'] = 'billing/edit/$1';
+$route['billing/delete/(:any)'] = 'billing/delete/$1';
+$route['billing'] = 'billing/index';
+$route['billing/add'] = 'billing/add';
 
 $route['reports/(:any)'] = 'reports/index/$1';
 $route['reports'] = 'reports/index';

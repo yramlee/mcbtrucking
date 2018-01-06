@@ -1,6 +1,14 @@
 <form method="post">
     <div class="row">
         <div class="col">
+            <label for="biling_date">Billing Date</label>
+            <select required="" name="billing_id" class="form-control" id="biling_date">
+            <?php echo select2(BILLING_PER_COMPANY($data->company_id),(!empty($_POST['billing_id']) ? $_POST['billing_id']:$data->billing_id)) ?>
+            </select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
             <label for="above">Above?</label>
             <select name="above" class="form-control" id="above">                       
                 <?php echo select2(TYPE_YESNO(), (empty($_POST['above']) ? $data->above: $_POST['above'])) ?>

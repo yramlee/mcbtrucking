@@ -14,16 +14,16 @@
                     </select>
                 </div>
             </div>
+            <?php if(!empty($_POST['company_id'])):?>
             <div class="row">
                 <div class="col">
-                    <label for="truck">From Date:</label>
-                    <input name="delivery_date_start" id="delivery_date_start" class="form-control" type="text" value="<?php echo (!empty($_POST['delivery_date_start']) ? $_POST['delivery_date_start']:'') ?>">
-                </div>
-                <div class="col">
-                    <label for="truck">To Date:</label>
-                    <input name="delivery_date_end" id="delivery_date_end" class="form-control" type="text" value="<?php echo (!empty($_POST['delivery_date_end']) ? $_POST['delivery_date_end']:'') ?>">
+                    <label for="biling_date">Billing Date</label>
+                    <select required="" name="billing_id" class="form-control" id="biling_date">
+                    <?php echo select2(BILLING_PER_COMPANY($_POST['company_id']),(!empty($_POST['billing_id']) ? $_POST['billing_id']:'')) ?>
+                    </select>
                 </div>
             </div>
+            <?php endif; ?>
             <br>
             <div class="row">
                 <div class="col">

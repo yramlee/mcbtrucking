@@ -36,6 +36,7 @@
               <a class="dropdown-item" href="<?php echo base_url().'vessel' ?>">Vessel</a>
               <a class="dropdown-item" href="<?php echo base_url().'rate' ?>">Rate</a>
               <a class="dropdown-item" href="<?php echo base_url().'material' ?>">Material</a>
+              <a class="dropdown-item" href="<?php echo base_url().'billing' ?>">Billing</a>
             </div>
           </li>
           <li class="nav-item <?php echo ($this->uri->segment(1) == 'reports' ? 'active':'') ?>">

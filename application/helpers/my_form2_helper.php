@@ -5,13 +5,13 @@ function __displayEachReportPerDestinationAll($where = array(), $post = array(),
     $destination = my_destination();
     $data = null;
     $heading = null;
-  
+    $billing = $CI->Billing_model->get_by_id($post['billing_id']);
     $company = $CI->Company_model->get_by_id(@$where['company_id']);       
     if ($pdf_mode) {  
         $heading .= '<table style="text-align: center; width: 100%; margin: 0 auto; font-family: Arial">';
         $heading .= '<tr><td style="font-weight: bold; font-size: 25px;">MCB Trucking Services</td></tr>';  
         $heading .= '<tr><td style="position: relative; top: -20px; font-weight: bold; font-size: 18px;">Billing Summary</td></tr>';    
-        $heading .= '<tr><td><strong>Period:</strong> '.date('F d, Y', strtotime($post['delivery_date_start'])).' to '.date('F d, Y', strtotime($post['delivery_date_end'])).' </td></tr>';
+        $heading .= '<tr><td><strong>Period:</strong> '.date('F d, Y', strtotime($billing->start_date)).' to '.date('F d, Y', strtotime($billing->end_date)).' </td></tr>';
         $heading .= '</table>';          
         $heading .= '<hr>';
         $heading .= '<table style="text-align: left; width: 100%; margin: 0 auto; font-family: Arial;border-collapse: collapse;">';
