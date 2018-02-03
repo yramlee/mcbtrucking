@@ -20,6 +20,11 @@
             $('#delivery_date_end').datepicker({
                 uiLibrary: 'bootstrap4'
             });
+            
+            // Close alert
+            setTimeout(function() {
+                $(".alert").alert('close');
+            }, 2000);
         });
     </script>
   </body>

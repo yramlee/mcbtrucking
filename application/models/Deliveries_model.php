@@ -39,8 +39,8 @@ class Deliveries_model extends CI_Model {
      * @return array
      */
     public function get_all_by_where($where = array())
-    {
-        $query = $this->db->get_where($this->_table, $where);
+    {        
+        $query = $this->db->order_by('ticket_no', 'ASC')->order_by('date', 'ASC')->get_where($this->_table, $where);
         return $query->result();
     }
     
